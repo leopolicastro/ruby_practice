@@ -13,11 +13,11 @@ class List
  
   def open_file(filename)
     CSV.foreach('list.csv') do |row|
-      @list << Task.new({item: row[0]})  #????? why row 0
+      @list << Task.new({item: row[0]})
     end
   end
  
-  def list_view
+  def show
     @list.each_with_index do |item, index|
       puts "#{index}. #{item.item}"
     end
@@ -28,7 +28,7 @@ class List
     save_to_file
   end
  
-  def delete(index)
+  def destroy(index)
     @list.delete_at(index)
     save_to_file
   end
@@ -65,8 +65,8 @@ class CommandLine < Thor
     @@my_list.add(arg)
   end
  
-  desc "delete [task]", "Deletes task."
-  def delete(arg)
+  desc "destroy [task]", "Deletes task."
+  def destroy(arg)
     @@my_list.delete(arg.to_i)
   end
  
@@ -77,7 +77,7 @@ class CommandLine < Thor
  
   desc "list", "List tasks."
   def list
-    @@my_list.list_view
+    @@my_list.show
   end
  
 end
